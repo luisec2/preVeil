@@ -1,0 +1,31 @@
+apiVersion: v1 
+kind: ReplicationController 
+metadata:
+  name: prob2-v1
+spec:
+  replicas: 2 
+  template:
+    metadata:
+      name: prob2
+      labels:
+        app: prob2 
+    spec:
+      containers:
+      - image: casagrande.com:5000/lhad:v3
+        name: prob2 
+        ports:
+        -  containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prob2-v1
+spec:
+  type: LoadBalancer
+  externalIPs:
+  - 192.168.0.100
+  selector:
+    app: prob2
+  ports:
+  - port: 80
+    targetPort: 8080

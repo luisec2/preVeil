@@ -1,0 +1,6 @@
+#!/bin/bash
+#
+#set -x
+cd /tmp/work
+echo "Listening on port 9090"
+python server.py

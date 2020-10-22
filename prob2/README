@@ -1,0 +1,51 @@
+# Preveil Question  - Deployment
+Rest API app returns:  <hostname>/hello  --->  Hello PreVeil!
+                       <hostname>/latin  --->  Hola PreVeil!
+# Instructions
+    - folder located under "prob2"
+```sh
+prob2
+├── Dockerfile
+├── repcontroller.yaml
+└── resources
+    ├── server
+    └── server.go
+```
+## Commands
+    -   cd  prob2
+    -   sudo docker build -t lhad.v3 .
+    -   sudo docker tag lhad:v3 casagrande.com:5000/lhd:v3
+    -   sudo docker push casagrande.com:5000/lhd:v3
+    # on kubernetes
+    -   kubectl apply -f repcontroller.yaml
+    -   kubectl get rc 
+    -   kubectl get po 
+    -   kubectl get svc
+    -   kubectl get ep
+```sh
+
+# output
+    vagrant@zmaster:~$ k get rc
+NAME       DESIRED   CURRENT   READY   AGE
+prob2-v1   2         2         2       4s
+vagrant@zmaster:~$ k get po
+NAME             READY   STATUS    RESTARTS   AGE
+prob2-v1-cvg9z   1/1     Running   0          8s
+prob2-v1-dmpwj   1/1     Running   0          8s
+test             1/1     Running   0          8h
+vagrant@zmaster:~$ k get svc
+NAME         TYPE           CLUSTER-IP      EXTERNAL-IP     PORT(S)        AGE
+kubernetes   ClusterIP      10.96.0.1       <none>          443/TCP        9h
+prob2-v1     LoadBalancer   10.97.129.167   192.168.0.100   80:31944/TCP   12s
+vagrant@zmaster:~$ k get ep
+NAME         ENDPOINTS                       AGE
+kubernetes   192.168.0.100:6443              9h
+prob2-v1     10.44.0.3:8080,10.44.0.4:8080   34m
+
+    # Load balancer test:
+  vagrant@zmaster:~$ curl http://192.168.0.100:80/latin
+Hola, Preveil! 
+
+vagrant@zmaster:~$ curl http://192.168.0.100:80/hello
+Hello, Preveil!
+

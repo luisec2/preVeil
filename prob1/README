@@ -1,0 +1,32 @@
+# Preveil Question  - Web app
+# Instructions
+    - folder located under "prob1"
+```sh
+prob1
+├── Dockerfile
+├── Makefile
+└── resources
+    ├── index.html
+    ├── rbundle
+    └── server.py
+```
+# Commands
+    -    cd prob1
+    -   sudo docker build -t lhad:v1 .
+    -   sudo docker run --name prob1 -p 9090:9090 lhad:v1 
+        Listening on port 9090
+    Opening a new session:    
+    -   curl localhost:9090
+    <html>
+    <head>
+        <title>Home assigment devops</title>
+    </head>
+    <body>
+        <h1>Web app - first task </h1>
+    </body>
+</html>
+
+    Closing docker container:
+    -   sudo docker container stop prob1
+    -   sudo docker container rm prob1
+
